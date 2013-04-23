@@ -1,0 +1,16 @@
+name = nSport Template v0.1
+description = Template v0.1
+core = 7.x
+engine = phptemplate
+
+regions[header] = Header
+regions[sidebar_first] = Right sidebar
+regions[content] = Content
+regions[footer] = Footer
+
+stylesheets[all][] = css/bootstrap.css
+stylesheets[all][] = css/bootstrap-overrides.css
+
+
+features[] = name
+features[] = main_menu
