@@ -6,6 +6,8 @@
  * 			Add insert
  * 			generate url image
  */
+ 
+
 class categories {
 	
 	
@@ -15,36 +17,35 @@ class categories {
 	
 	/* End define variables */
 	
-	function __construct($name,$description) {
-		$this->_description = $description;
-		$this->_name = $name;
+	function __construct() {
 	}
 	
 	
 	/* Gettor */
 	
-	public function getCategory($db,$id) {
-		
-		$query = "SELECT * FROM categories WHERE id=$id";
+	public function getCategory($id) {
+		global $db;
+		$query = "SELECT * FROM api_categories WHERE id=$id";
 		$result = $db->query($query);
 		$result->setFetchMode(PDO::FETCH_OBJ);
-		$result = $result->fetch();
-		
-		return $result; 
-		
+		if($result->rowCount() > 0 ) {
+			$return = $result->fetch();
+		}
+		return $return; 
 	}
 	
 	
-	public function getAllCategories($db) {
+	public function getAllCategories() {
 		
-		$query = "SELECT * FROM categories";
+		global $db;
+		$query = "SELECT * FROM api_categories";
 		$results = $db->query($query);
 		$results->setFetchMode(PDO::FETCH_OBJ);
-		while($activity = $results->fetch()) {
-			$activities[] = $activity;
+		while($category = $results->fetch()) {
+			$categories[] = $category;
 		}
 			
-		return $activities;
+		return $categories;
 	}
 	
 	
@@ -62,6 +63,23 @@ class categories {
 	
 	
 	/* settor */
+	
+	public function saveCategory($name,$description,$image)
+	{
+		try {
+			global $db;
+			$query  = $db->prepare("INSERT INTO api_categories (name, description) VALUES (:name, :description)");
+			$query->bindParam(':name', $name);
+			$query->bindParam(':description', $description);
+			$query->execute();
+		}
+		catch(exception $e) {
+			echo'here';
+  			mail('nicoo2k4@gmail.com',"[ERROR NSPORT] SQL ERROR ",'ERROR AJOUT CATEGORIES');
+		}
+
+
+	}
 	
 	public function setName($name) {
 		$this->_name = $name;

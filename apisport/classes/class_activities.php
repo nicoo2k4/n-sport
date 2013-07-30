@@ -2,7 +2,7 @@
 
 
 
-class exercices {
+class activities {
 
 	/* Define variables */
 
@@ -19,21 +19,56 @@ class exercices {
 	
 	/* Gettor */
 	
-	public function getActivities() {
-		//Query database
-		
-		//Fetch in array
-		
-		//Return
-		
+	public function getAllActivities() {
+		global $db;
+		try {
+			$query = "SELECT * FROM api_activities";
+			$results = $db->query($query);
+			$results->setFetchMode(PDO::FETCH_OBJ);
+			while($activity = $results->fetch()) {
+				$activities[] = $activity;
+			}
+				
+			return $activities;
+		}
+		catch (exception $e) {
+			mail('nicoo2k4@gmail.com','[ERROR SQL NSPORT]', $e->getMessage() );
+		}
+			
+	}
+	
+	public function getActivities($id) {
+		global $db;
+		try {
+			$query = "SELECT * FROM api_activities WHERE id = $id";
+			$results = $db->query($query);
+			$results->setFetchMode(PDO::FETCH_OBJ);
+			while($activity = $results->fetch()) {
+				$activities[] = $activity;
+			}
+				
+			return $activities;
+		}
+		catch (exception $e) {
+			mail('nicoo2k4@gmail.com','[ERROR SQL NSPORT]', $e->getMessage() );
+		}
 	}
 	
 	public function getActivitiesByCategories($categoryId) {
-		//Query database
-		
-		//fetch in array
-		
-		//return
+		global $db;
+		try {
+			$query = "SELECT * FROM api_activities WHERE id_category = $categoryId";
+			$results = $db->query($query);
+			$results->setFetchMode(PDO::FETCH_OBJ);
+			while($activity = $results->fetch()) {
+				$activities[] = $activity;
+			}
+				
+			return $activities;
+		}
+		catch (exception $e) {
+			mail('nicoo2k4@gmail.com','[ERROR SQL NSPORT]', $e->getMessage() );
+		}
 	}
 	
 	
@@ -63,6 +98,29 @@ class exercices {
 	
 	/* End Gettor */
 
+	/* settor */
+	
+	public function saveActivites($name,$description,$resume,$id_category,$image='')
+	{
+		try {
+			global $db;
+			$query  = $db->prepare("INSERT INTO api_activities (name, description,resume,id_category) VALUES (:name, :description, :resume, :id_category)");
+			$query->bindParam(':name', $name);
+			$query->bindParam(':description', $description);
+			$query->bindParam(':resume', $resume);
+			$query->bindParam(':id_category', $id_category);
+			$query->execute();
+		}
+		catch(exception $e) {
+			echo'here';
+  			mail('nicoo2k4@gmail.com',"[ERROR NSPORT] SQL ERROR ",$e->getMessage());
+		}
+
+
+	}
+	
+	
+	/* end settor */
 
 
 }
