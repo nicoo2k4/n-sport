@@ -32,7 +32,7 @@ class activities {
 			return $activities;
 		}
 		catch (exception $e) {
-			mail('nicoo2k4@gmail.com','[ERROR SQL NSPORT]', $e->getMessage() );
+			sendMail('SQL ERROR', $e->getMessage());
 		}
 			
 	}
@@ -50,7 +50,7 @@ class activities {
 			return $activities;
 		}
 		catch (exception $e) {
-			mail('nicoo2k4@gmail.com','[ERROR SQL NSPORT]', $e->getMessage() );
+			sendMail('SQL ERROR', $e->getMessage());
 		}
 	}
 	
@@ -67,7 +67,7 @@ class activities {
 			return $activities;
 		}
 		catch (exception $e) {
-			mail('nicoo2k4@gmail.com','[ERROR SQL NSPORT]', $e->getMessage() );
+			sendMail('SQL ERROR', $e->getMessage());
 		}
 	}
 	
@@ -112,8 +112,7 @@ class activities {
 			$query->execute();
 		}
 		catch(exception $e) {
-			echo'here';
-  			mail('nicoo2k4@gmail.com',"[ERROR NSPORT] SQL ERROR ",$e->getMessage());
+			sendMail('SQL ERROR', $e->getMessage());
 		}
 
 

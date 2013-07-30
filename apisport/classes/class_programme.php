@@ -19,11 +19,10 @@
 				while($programme = $results->fetch()) {
 					$programmes[] = $programme;
 				}
-				echo 'here';	
 				return $programmes;
 			}
 			catch (exception $e) {
-				mail('nicoo2k4@gmail.com','[ERROR SQL NSPORT]', $e->getMessage() );
+				sendMail('SQL ERROR', $e->getMessage());
 			}
 				
 			
@@ -42,8 +41,7 @@
 				$query->execute();
 			}
 			catch(exception $e) {
-				echo'here';
-	  			mail('nicoo2k4@gmail.com',"[ERROR NSPORT] SQL ERROR ",$e->getMessage());
+				sendMail('SQL ERROR', $e->getMessage());
 			}
 				
 			

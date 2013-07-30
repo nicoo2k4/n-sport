@@ -74,8 +74,7 @@ class categories {
 			$query->execute();
 		}
 		catch(exception $e) {
-			echo'here';
-  			mail('nicoo2k4@gmail.com',"[ERROR NSPORT] SQL ERROR ",'ERROR AJOUT CATEGORIES');
+			sendMail('SQL ERROR', $e->getMessage());
 		}
 
 

@@ -1,5 +1,7 @@
 <?php 
 
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 	// Include FrameWork Slim 
 	require_once ("includes/Slim/Slim.php");
 	require_once ("includes/functions.php");
@@ -26,8 +28,14 @@
 	$app->get('/categorie/:id', 'getCategoryById');
 	
 	
+	/* Seance */ 
+	$app->get('/sceance/add/:user_id/:name' , 'addSceance');
+	$app->get('/sceance/get/:user', 'getSeance');
+	$app->get('/sceance/add_exercice/:seance_id/:id_activity/:reps/:serie','addExercice');
+	$app->get('/sceance/get/detail/:id', 'getSeanceDetail');
 	
-	$app->get('/sceance/:user', 'getSeance');
+	
+	/* Programme */
 	$app->get('/programme/:user', 'getProgramme');
 	$app->run();
 
@@ -111,6 +119,35 @@
 	}
 	
 	
+	function getSeanceDetail($id) {
+		$seance = new sceance(); 
+		try {
+			$result = $seance->getSceanceDetail($id);
+			return json_encode($result);
+		}
+		catch( exception $e) {
+			sendMail(__FUNCTION__, $e->getMessage());
+			return json_encode('False');
+		}
+	}
+	
+	
+	
+	function addExercice($seance_id,$id_activity,$reps,$serie) {
+		$seance = new sceance() ;
+		
+		$seance->addExercice($seance_id,$id_activity,$reps,$serie); 
+	}
+	
+	function addSceance($user_id,$name) {
+		$sceance = new sceance();
+		try {
+			$sceance->addSceance($user_id, $name);
+		}
+		catch( exception $e ) {
+			sendMail(__FUNCTION__, $e->getMessage());
+		}
+	}
 	
 	/**
 	 *  getSeance function
@@ -123,7 +160,6 @@
 		if($user and strlen($user) <= 6 ) {
 			$sceance = new sceance();
 			$result = $sceance->getSceance($user);
-			print_r($result);
 			try {
 				$result = $sceance->getSceance($user);
 
